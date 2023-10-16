@@ -25,9 +25,10 @@ const EMAIL_TEMPLATES = {
   follow_up_1: {
     cc: "group@ship-around.com",
     intro: "Dear {name},<br>",
-    body: "Further to our last communication for {quote_items}, we would like to follow up on your interest in pursuing this order.<br>",
-    note: "I have attached our quotation again for your perusal.<br>",
-    closing: "If we can be of any further assistance, please let as know at your earliest convenient.",
+    body: "I am following up regarding our last quotation {quote_reference} for {quote_items}.<br><br>We would like to know if you are still interested in pursuing this order.<br>",
+    note: "I have attached said quotation again for your perusal.<br>",
+    closing:
+      "Please let us know of your decision at your earliest convenience and if there is any way we can assist you further.<br><br>We appreciate your interest in Ship-Around for your procurement needs.",
   },
 };
 
@@ -364,10 +365,15 @@ export async function followUp1() {
     const item = Office.context.mailbox.item;
 
     emailUtility = new EmailUtility(item);
-    const modal = new Modal("inputModal", ["leadInputDiv", "nameInputDiv", "itemsInputDiv"], "modalOk", "modalCancel");
+    const modal = new Modal(
+      "inputModal",
+      ["leadInputDiv", "nameInputDiv", "quoteInputDiv", "itemsInputDiv"],
+      "modalOk",
+      "modalCancel"
+    );
 
     // Show the modal and wait for the input
-    const [lead, name, items] = await modal.show();
+    const [lead, name, reference, items] = await modal.show();
 
     // Use the modal input to prepend to the subject
     await emailUtility.addSubject(`[SALE${lead}] `);
@@ -381,6 +387,7 @@ export async function followUp1() {
     // Get the email content
     const emailContentToAdd = emailUtility.getEmailContent("follow_up_1", {
       name: name,
+      quote_reference: reference,
       quote_items: items,
     });
 
