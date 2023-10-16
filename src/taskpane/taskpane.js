@@ -25,9 +25,9 @@ const EMAIL_TEMPLATES = {
   follow_up_1: {
     cc: "group@ship-around.com",
     intro: "Dear {name},<br>",
-    body: "Further to our last quotation for {quote_items}, we would like to follow up on your interest in pursuing this order.<br>",
-    note: "Please find attached said quotation for your perusal.<br>",
-    closing: "Let us know if we can provide any further assistance at your earliest convenient.",
+    body: "Further to our last communication for {quote_items}, we would like to follow up on your interest in pursuing this order.<br>",
+    note: "I have attached our quotation again for your perusal.<br>",
+    closing: "If we can be of any further assistance, please let as know at your earliest convenient.",
   },
 };
 
