@@ -24,7 +24,7 @@
     <Form xsi:type="ItemRead">
       <DesktopSettings>
         <SourceLocation DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/taskpane.html"/>
-        <RequestedHeight>250</RequestedHeight>
+        <RequestedHeight>240</RequestedHeight>
       </DesktopSettings>
     </Form>
   </FormSettings>
