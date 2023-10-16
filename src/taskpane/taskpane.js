@@ -25,7 +25,7 @@ const EMAIL_TEMPLATES = {
   follow_up_1: {
     cc: "group@ship-around.com",
     intro: "Dear {name},<br>",
-    body: "Further to our last quotation on {email_date} for {quote_items}, we would like to follow up on your interest in pursuing this order.<br>",
+    body: "Further to our last quotation for {quote_items}, we would like to follow up on your interest in pursuing this order.<br>",
     note: "Please find attached said quotation for your perusal.<br>",
     closing: "Let us know if we can provide any further assistance at your earliest convenient.",
   },
@@ -44,29 +44,13 @@ Office.onReady((info) => {
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("acknowledge").onclick = acknowledgeRFQ;
     document.getElementById("prepare-quote-email").onclick = prepareQuoteEmail;
+    document.getElementById("follow-up").onclick = followUp1;
   }
 });
 
 class EmailUtility {
   constructor(item) {
     this.item = item;
-  }
-
-  getSentDateFromEmail() {
-    const emailHeaders = this.item.internetHeaders;
-
-    if (!emailHeaders || !emailHeaders.headers) {
-      return null;
-    }
-
-    for (const header of emailHeaders.headers) {
-      if (header.name === "Date") {
-        // You may need to parse the date if the format is different
-        return new Date(header.value);
-      }
-    }
-
-    return null;
   }
 
   getEmailContent(templateType, replacements) {
@@ -380,7 +364,7 @@ export async function followUp1() {
     const item = Office.context.mailbox.item;
 
     emailUtility = new EmailUtility(item);
-    const modal = new Modal("inputModal", ["leadInputDiv", "nameInputDiv", "itemsInput"], "modalOk", "modalCancel");
+    const modal = new Modal("inputModal", ["leadInputDiv", "nameInputDiv", "itemsInputDiv"], "modalOk", "modalCancel");
 
     // Show the modal and wait for the input
     const [lead, name, items] = await modal.show();
@@ -394,13 +378,9 @@ export async function followUp1() {
     // Simply add the group handle to CC
     await emailUtility.addCC(ccGroupAddress);
 
-    // Get the current date
-    const currentDate = new Date().toDateString(); // You can format it as needed
-
     // Get the email content
     const emailContentToAdd = emailUtility.getEmailContent("follow_up_1", {
       name: name,
-      date: currentDate,
       quote_items: items,
     });
 
