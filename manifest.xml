@@ -6,8 +6,8 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Leads"/>
   <Description DefaultValue="Sales Leads Actions"/>
-  <IconUrl DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/assets/icon-64.png"/>
-  <HighResolutionIconUrl DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/assets/icon-128.png"/>
+  <IconUrl DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/dist/assets/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/dist/assets/icon-128.png"/>
   <SupportUrl DefaultValue="https://ship-around.com"/>
   <AppDomains>
     <AppDomain>https://ship-around.com</AppDomain>
@@ -70,9 +70,9 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/assets/icon-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/dist/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/dist/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/dist/assets/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Commands.Url" DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/commands.html"/>
