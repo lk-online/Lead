@@ -44,6 +44,7 @@ Office.onReady((info) => {
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("acknowledge").onclick = acknowledgeRFQ;
     document.getElementById("prepare-quote-email").onclick = prepareQuoteEmail;
+    document.getElementById("follow-up").onclick = followUp1;
   }
 });
 
