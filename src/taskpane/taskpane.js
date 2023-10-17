@@ -303,7 +303,7 @@ export async function acknowledgeRFQ() {
     const [lead, name] = await modal.show();
 
     // Use the modal input to prepend to the subject
-    await emailUtility.addSubject(`[SALE${lead}] `);
+    await emailUtility.addSubject(`[SALE${lead.trim()}] `);
 
     // Define the email address you want to add to CC
     const ccGroupAddress = EMAIL_TEMPLATES.acknowledge.cc;
@@ -398,7 +398,7 @@ export async function followUp() {
     const [lead, name, reference, items] = await modal.show();
 
     // Use the modal input to prepend to the subject
-    await emailUtility.addSubject(`[SALE${lead}] `);
+    await emailUtility.addSubject(`[SALE${lead.trim()}] `);
 
     // Define the email address you want to add to CC
     const ccGroupAddress = EMAIL_TEMPLATES.follow_up.cc;
@@ -408,9 +408,9 @@ export async function followUp() {
 
     // Get the email content
     const emailContentToAdd = emailUtility.getEmailContent("follow_up", {
-      name: name,
-      quote_reference: reference.toUpperCase(),
-      quote_items: items.toLowerCase(),
+      name: name.trim(),
+      quote_reference: reference.toUpperCase().trim(),
+      quote_items: items.toLowerCase().trim(),
     });
 
     // Use the addBody method to prepend the content
