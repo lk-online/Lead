@@ -12,23 +12,28 @@ const EMAIL_TEMPLATES = {
     body: "Please find attached:<br>",
     attachments: "{attachments}",
     note: "If you accept our offer, please note that the last page of our quotation is the proforma invoice.<br>",
-    closing: "Looking forward to your order confirmation.",
+    closing:
+      "We appreciate your interest in Ship-Around for your procurement needs and we are looking forward to your order confirmation<br>",
+    footnote:
+      "If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing future requests.",
   },
   acknowledge: {
     cc: "group@ship-around.com",
     intro: "Dear {name},<br>",
     body: "Thank you for reaching out to us.<br><br>We have logged your inquiry with reference SALE{lead}.<br>",
     note: "Please include the above reference in any future correspondence.<br>",
-    closing:
-      "We appreciate your interest and will get back to you shortly.<br><br>If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing your request.",
+    closing: "We appreciate your interest and will get back to you shortly.<br>",
+    footnote:
+      "If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing your request.",
   },
   follow_up: {
     cc: "group@ship-around.com",
     intro: "Dear {name},<br>",
     body: "I am following up regarding our last quotation {quote_reference} for {quote_items}.<br><br>We would like to know if you are still interested in pursuing this order.<br>",
-    note: "I have attached said quotation again for your perusal.<br>",
-    closing:
-      "Please let us know of your decision at your earliest convenience and if there is any way we can assist you further.<br><br>We appreciate your interest in Ship-Around for your procurement needs.",
+    note: "I have attached said quotation again for your perusal.<br><br>Please let us know of your decision at your earliest convenience and if there is any way we can assist you further.<br>",
+    closing: "We appreciate your interest in Ship-Around for your procurement needs.<br>",
+    footnote:
+      "If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing future requests.",
   },
 };
 
@@ -303,7 +308,7 @@ export async function acknowledgeRFQ() {
     const [lead, name] = await modal.show();
 
     // Use the modal input to prepend to the subject
-    await emailUtility.addSubject(`[SALE${lead}] `);
+    await emailUtility.addSubject(`[SALE${lead.trim()}] `);
 
     // Define the email address you want to add to CC
     const ccGroupAddress = EMAIL_TEMPLATES.acknowledge.cc;
@@ -314,7 +319,7 @@ export async function acknowledgeRFQ() {
     // Get the email content
     const emailContentToAdd = emailUtility.getEmailContent("acknowledge", {
       name: name.trim(),
-      lead: lead.toLowerCase().trim(),
+      lead: lead.trim(),
     });
 
     // Use the addBody method to prepend the content
@@ -398,7 +403,7 @@ export async function followUp() {
     const [lead, name, reference, items] = await modal.show();
 
     // Use the modal input to prepend to the subject
-    await emailUtility.addSubject(`[SALE${lead}] `);
+    await emailUtility.addSubject(`[SALE${lead.trim()}] `);
 
     // Define the email address you want to add to CC
     const ccGroupAddress = EMAIL_TEMPLATES.follow_up.cc;
