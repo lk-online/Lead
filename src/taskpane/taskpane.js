@@ -22,12 +22,13 @@ const EMAIL_TEMPLATES = {
     closing:
       "We appreciate your interest and will get back to you shortly.<br><br>If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing your request.",
   },
-  follow_up_1: {
+  follow_up: {
     cc: "group@ship-around.com",
     intro: "Dear {name},<br>",
-    body: "Further to our last communication for {quote_items}, we would like to follow up on your interest in pursuing this order.<br>",
-    note: "I have attached our quotation again for your perusal.<br>",
-    closing: "If we can be of any further assistance, please let as know at your earliest convenient.",
+    body: "I am following up regarding our last quotation {quote_reference} for {quote_items}.<br><br>We would like to know if you are still interested in pursuing this order.<br>",
+    note: "I have attached said quotation again for your perusal.<br>",
+    closing:
+      "Please let us know of your decision at your earliest convenience and if there is any way we can assist you further.<br><br>We appreciate your interest in Ship-Around for your procurement needs.",
   },
 };
 
@@ -44,7 +45,7 @@ Office.onReady((info) => {
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("acknowledge").onclick = acknowledgeRFQ;
     document.getElementById("prepare-quote-email").onclick = prepareQuoteEmail;
-    document.getElementById("follow-up").onclick = followUp1;
+    document.getElementById("follow-up").onclick = followUp;
   }
 });
 
@@ -218,8 +219,29 @@ class Modal {
   }
 
   setupEventListeners() {
+    this.okButton.disabled = true;
+
+    // Create an array to keep track of the input elements
+    const inputElements = this.inputDivs.map((div) => div.querySelector("input"));
+
+    inputElements.forEach((input) => {
+      input.addEventListener("input", () => {
+        // Check if all required inputs are filled
+        const allInputsFilled = inputElements.every((input) => {
+          if (input.hasAttribute("required")) {
+            return input.value.trim() !== "";
+          }
+          return true;
+        });
+
+        // Enable or disable the "OK" button based on the condition
+        this.okButton.disabled = !allInputsFilled;
+      });
+    });
+
     this.okButton.onclick = () => {
-      const inputValues = this.inputDivs.map((div) => div.querySelector("input").value);
+      const inputValues = inputElements.map((input) => input.value);
+
       this.resolve(inputValues);
       this.clearInputs();
       this.hide();
@@ -227,6 +249,7 @@ class Modal {
 
     this.cancelButton.onclick = () => {
       this.reject(new Error("User cancelled the input."));
+      this.clearInputs();
       this.hide();
     };
   }
@@ -291,7 +314,7 @@ export async function acknowledgeRFQ() {
     // Get the email content
     const emailContentToAdd = emailUtility.getEmailContent("acknowledge", {
       name: name,
-      lead: lead,
+      lead: lead.toLowerCase(),
     });
 
     // Use the addBody method to prepend the content
@@ -357,37 +380,43 @@ export async function prepareQuoteEmail() {
   }
 }
 
-export async function followUp1() {
+export async function followUp() {
   let emailUtility;
   try {
     // Get a reference to the current compose item
     const item = Office.context.mailbox.item;
 
     emailUtility = new EmailUtility(item);
-    const modal = new Modal("inputModal", ["leadInputDiv", "nameInputDiv", "itemsInput"], "modalOk", "modalCancel");
+    const modal = new Modal(
+      "inputModal",
+      ["leadInputDiv", "nameInputDiv", "quoteInputDiv", "itemsInputDiv"],
+      "modalOk",
+      "modalCancel"
+    );
 
     // Show the modal and wait for the input
-    const [lead, name, items] = await modal.show();
+    const [lead, name, reference, items] = await modal.show();
 
     // Use the modal input to prepend to the subject
-    await emailUtility.addSubject(`[Follow-up SALE${lead}] `);
+    await emailUtility.addSubject(`[SALE${lead}] `);
 
     // Define the email address you want to add to CC
-    const ccGroupAddress = EMAIL_TEMPLATES.follow_up_1.cc;
+    const ccGroupAddress = EMAIL_TEMPLATES.follow_up.cc;
 
     // Simply add the group handle to CC
     await emailUtility.addCC(ccGroupAddress);
 
     // Get the email content
-    const emailContentToAdd = emailUtility.getEmailContent("follow_up_1", {
+    const emailContentToAdd = emailUtility.getEmailContent("follow_up", {
       name: name,
-      quote_items: items,
+      quote_reference: reference.toUpperCase(),
+      quote_items: items.toLowerCase(),
     });
 
     // Use the addBody method to prepend the content
     await emailUtility.addBody(emailContentToAdd);
   } catch (error) {
     // Use the helper function to display the error in the task pane
-    emailUtility.displayErrorInTaskpane(`Error in followUp1: ${error.message}`);
+    emailUtility.displayErrorInTaskpane(`Error in followUp: ${error.message}`);
   }
 }
