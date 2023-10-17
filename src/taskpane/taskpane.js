@@ -22,7 +22,7 @@ const EMAIL_TEMPLATES = {
     closing:
       "We appreciate your interest and will get back to you shortly.<br><br>If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing your request.",
   },
-  follow_up_1: {
+  follow_up: {
     cc: "group@ship-around.com",
     intro: "Dear {name},<br>",
     body: "I am following up regarding our last quotation {quote_reference} for {quote_items}.<br><br>We would like to know if you are still interested in pursuing this order.<br>",
@@ -401,13 +401,13 @@ export async function followUp() {
     await emailUtility.addSubject(`[SALE${lead}] `);
 
     // Define the email address you want to add to CC
-    const ccGroupAddress = EMAIL_TEMPLATES.follow_up_1.cc;
+    const ccGroupAddress = EMAIL_TEMPLATES.follow_up.cc;
 
     // Simply add the group handle to CC
     await emailUtility.addCC(ccGroupAddress);
 
     // Get the email content
-    const emailContentToAdd = emailUtility.getEmailContent("follow_up_1", {
+    const emailContentToAdd = emailUtility.getEmailContent("follow_up", {
       name: name,
       quote_reference: reference.toUpperCase(),
       quote_items: items.toLowerCase(),
