@@ -313,8 +313,8 @@ export async function acknowledgeRFQ() {
 
     // Get the email content
     const emailContentToAdd = emailUtility.getEmailContent("acknowledge", {
-      name: name,
-      lead: lead.toLowerCase(),
+      name: name.trim(),
+      lead: lead.toLowerCase().trim(),
     });
 
     // Use the addBody method to prepend the content
@@ -369,7 +369,7 @@ export async function prepareQuoteEmail() {
 
     // Get the email content
     const emailContentToAdd = emailUtility.getEmailContent("offer", {
-      name: name,
+      name: name.trim(),
       attachments: attachmentTable,
     });
 
@@ -408,9 +408,9 @@ export async function followUp() {
 
     // Get the email content
     const emailContentToAdd = emailUtility.getEmailContent("follow_up", {
-      name: name,
-      quote_reference: reference.toUpperCase(),
-      quote_items: items.toLowerCase(),
+      name: name.trim(),
+      quote_reference: reference.toUpperCase().trim(),
+      quote_items: items.toLowerCase().trim(),
     });
 
     // Use the addBody method to prepend the content
