@@ -387,8 +387,8 @@ export async function followUp1() {
     // Get the email content
     const emailContentToAdd = emailUtility.getEmailContent("follow_up_1", {
       name: name,
-      quote_reference: reference,
-      quote_items: items,
+      quote_reference: reference.toUpperCase(),
+      quote_items: items.toLowerCase(),
     });
 
     // Use the addBody method to prepend the content
