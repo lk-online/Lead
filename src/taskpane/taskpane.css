@@ -119,3 +119,7 @@ b {
     font-weight: 600;
     margin-bottom: 4px;
 }
+
+#modalOk:disabled {
+    background-color: gray;
+}

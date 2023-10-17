@@ -45,7 +45,7 @@ Office.onReady((info) => {
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("acknowledge").onclick = acknowledgeRFQ;
     document.getElementById("prepare-quote-email").onclick = prepareQuoteEmail;
-    document.getElementById("follow-up").onclick = followUp1;
+    document.getElementById("follow-up").onclick = followUp;
   }
 });
 
@@ -219,8 +219,29 @@ class Modal {
   }
 
   setupEventListeners() {
+    this.okButton.disabled = true;
+
+    // Create an array to keep track of the input elements
+    const inputElements = this.inputDivs.map((div) => div.querySelector("input"));
+
+    inputElements.forEach((input) => {
+      input.addEventListener("input", () => {
+        // Check if all required inputs are filled
+        const allInputsFilled = inputElements.every((input) => {
+          if (input.hasAttribute("required")) {
+            return input.value.trim() !== "";
+          }
+          return true;
+        });
+
+        // Enable or disable the "OK" button based on the condition
+        this.okButton.disabled = !allInputsFilled;
+      });
+    });
+
     this.okButton.onclick = () => {
-      const inputValues = this.inputDivs.map((div) => div.querySelector("input").value);
+      const inputValues = inputElements.map((input) => input.value);
+
       this.resolve(inputValues);
       this.clearInputs();
       this.hide();
@@ -228,6 +249,7 @@ class Modal {
 
     this.cancelButton.onclick = () => {
       this.reject(new Error("User cancelled the input."));
+      this.clearInputs();
       this.hide();
     };
   }
@@ -292,7 +314,7 @@ export async function acknowledgeRFQ() {
     // Get the email content
     const emailContentToAdd = emailUtility.getEmailContent("acknowledge", {
       name: name,
-      lead: lead,
+      lead: lead.toLowerCase(),
     });
 
     // Use the addBody method to prepend the content
@@ -358,7 +380,7 @@ export async function prepareQuoteEmail() {
   }
 }
 
-export async function followUp1() {
+export async function followUp() {
   let emailUtility;
   try {
     // Get a reference to the current compose item
@@ -395,6 +417,6 @@ export async function followUp1() {
     await emailUtility.addBody(emailContentToAdd);
   } catch (error) {
     // Use the helper function to display the error in the task pane
-    emailUtility.displayErrorInTaskpane(`Error in followUp1: ${error.message}`);
+    emailUtility.displayErrorInTaskpane(`Error in followUp: ${error.message}`);
   }
 }
