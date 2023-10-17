@@ -28,14 +28,16 @@
             your add-in to see app body.</h2>
     </section>
     <main id="app-body" class="ms-welcome__main" style="display: none;">
-        <div role="button" id="acknowledge" class="ms-welcome__action ms-Button ms-Button--hero ms-font-m">
-            <span class="ms-Button-label">Acknowledge RFQ</span>
-        </div>
-        <div role="button" id="prepare-quote-email" class="ms-welcome__action ms-Button ms-Button--hero ms-font-m">
-            <span class="ms-Button-label">Prepare Quote Email</span>
-        </div>
-        <div role="button" id="follow-up" class="ms-welcome__action ms-Button ms-Button--hero ms-font-m">
-            <span class="ms-Button-label">Follow Up</span>
+        <div id="buttonContainer">
+            <div role="button" id="acknowledge" class="ms-welcome__action ms-Button ms-Button--hero ms-font-m">
+                <span class="ms-Button-label">Acknowledge RFQ</span>
+            </div>
+            <div role="button" id="prepare-quote-email" class="ms-welcome__action ms-Button ms-Button--hero ms-font-m">
+                <span class="ms-Button-label">Prepare Quote</span>
+            </div>
+            <div role="button" id="follow-up" class="ms-welcome__action ms-Button ms-Button--hero ms-font-m">
+                <span class="ms-Button-label">Follow Up</span>
+            </div>
         </div>
         <div id="inputModal" class="modal">
             <div class="modal-content">
@@ -59,9 +61,26 @@
                 <button id="modalCancel">Cancel</button>
             </div>
         </div>
-
-
-
+        <div id="generalInstructions">
+            <h3>Please note:</h3>
+            <ul>
+                <li>Clicking a button and entering information doesn't send an email automatically; you still need to
+                    click on "send"</li>
+                <li>Unless you complete all required fields, the OK button of the modal will be disabled</li>
+                <li>If the font size of the produced email body is wrong, simply select it and set it manually</li>
+                <li>With the exception of the font size, editing the email body directly will most probably break the
+                    format; don't do it</li>
+                <li>If you need to send a highly customized message, do it manually</li>
+                <li>If you are unsure about something you did, it's better to discard the message and start anew</li>
+            </ul>
+            <div>Click <a
+                    href="https://shiparounduae.sharepoint.com/:b:/s/group/ERmbRFkE7-dIgGRkuCel3TwB-mRlidp904suhH5HxuC1jQ?e=7irI9k">here</a>
+                to view the complete guide.</div>
+            <div id="errorLog">
+                <h4>Error log:</h4>
+                <span class="ms-font-s">If you need help with an error, please copy the error log below</span>
+            </div>
+        </div>
     </main>
 </body>
 
