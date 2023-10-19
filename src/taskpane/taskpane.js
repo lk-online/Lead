@@ -13,7 +13,7 @@ const EMAIL_TEMPLATES = {
     attachments: "{attachments}",
     note: "If you accept our offer, please note that the last page of our quotation is the proforma invoice.<br>",
     closing:
-      "We appreciate your interest in Ship-Around for your procurement needs and we are looking forward to your order confirmation.<br>",
+      "We appreciate your interest in Ship-Around for your procurement needs and we are looking forward to your order confirmation<br>",
     footnote:
       "If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing future requests.",
   },
@@ -148,21 +148,10 @@ class EmailUtility {
     });
   }
 
-  displayErrorInTaskpane(errorMessage, containerId) {
+  displayErrorInTaskpane(errorMessage) {
     const errorDiv = document.createElement("div");
     errorDiv.style.color = "red";
     errorDiv.textContent = errorMessage;
-
-    if (containerId) {
-      const container = document.getElementById(containerId);
-      if (container) {
-        container.style.display = "block";
-        container.appendChild(errorDiv);
-        return;
-      }
-    }
-
-    // If containerId is not provided or the container doesn't exist, append to document.body
     document.body.appendChild(errorDiv);
   }
 
@@ -337,7 +326,7 @@ export async function acknowledgeRFQ() {
     await emailUtility.addBody(emailContentToAdd);
   } catch (error) {
     // Use the helper function to display the error in the taskpane
-    emailUtility.displayErrorInTaskpane(`Error in acknowledgeRFQ: ${error.message}`, "errorLog");
+    emailUtility.displayErrorInTaskpane(`Error in acknowledgeRFQ: ${error.message}`);
   }
 }
 
@@ -392,7 +381,7 @@ export async function prepareQuoteEmail() {
     // Use the addBody method to prepend the content
     await emailUtility.addBody(emailContentToAdd);
   } catch (error) {
-    emailUtility.displayErrorInTaskpane(`Error in prepareQuoteEmail: ${error.message}`, "errorLog");
+    emailUtility.displayErrorInTaskpane(`Error in prepareQuoteEmail: ${error.message}`);
   }
 }
 
@@ -433,6 +422,6 @@ export async function followUp() {
     await emailUtility.addBody(emailContentToAdd);
   } catch (error) {
     // Use the helper function to display the error in the task pane
-    emailUtility.displayErrorInTaskpane(`Error in followUp: ${error.message}`, "errorLog");
+    emailUtility.displayErrorInTaskpane(`Error in followUp: ${error.message}`);
   }
 }
