@@ -9,9 +9,13 @@
   <IconUrl DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/assets/icon-64.png"/>
   <HighResolutionIconUrl DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/assets/icon-128.png"/>
   <SupportUrl DefaultValue="https://shiparounduae.sharepoint.com/:b:/s/group/ERmbRFkE7-dIgGRkuCel3TwB-mRlidp904suhH5HxuC1jQ?e=7irI9k"/>
-  <AppDomains>
+<AppDomains>
     <AppDomain>https://shiparounduae.sharepoint.com</AppDomain>
-  </AppDomains>
+    <AppDomain>https://login.microsoftonline.com</AppDomain>
+    <AppDomain>https://device.login.microsoftonline.com</AppDomain>
+    <AppDomain>https://autologon.microsoftazuread-sso.com</AppDomain>
+</AppDomains>
+
   <Hosts>
     <Host Name="Mailbox"/>
   </Hosts>
