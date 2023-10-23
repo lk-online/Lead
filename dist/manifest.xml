@@ -5,7 +5,7 @@
   <ProviderName>Ship-Around</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Sales Leads"/>
-  <Description DefaultValue="Sales Leads Actions"/>
+  <Description DefaultValue="Send an email based on a template for repeating email actions."/>
   <IconUrl DefaultValue="https://lk-online.github.io/Lead/dist/assets/icon-64.png"/>
   <HighResolutionIconUrl DefaultValue="https://lk-online.github.io/Lead/dist/assets/icon-128.png"/>
   <SupportUrl DefaultValue="https://shiparounduae.sharepoint.com/:b:/s/group/ERmbRFkE7-dIgGRkuCel3TwB-mRlidp904suhH5HxuC1jQ?e=7irI9k"/>
