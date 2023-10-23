@@ -6,16 +6,16 @@
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Sales Leads"/>
   <Description DefaultValue="Sales Leads Actions"/>
-  <IconUrl DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/assets/icon-64.png"/>
-  <HighResolutionIconUrl DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/assets/icon-128.png"/>
+  <IconUrl DefaultValue="https://lk-online.github.io/Lead/dist/assets/icon-64.png"/>
+  <HighResolutionIconUrl DefaultValue="https://lk-online.github.io/Lead/dist/assets/icon-128.png"/>
   <SupportUrl DefaultValue="https://shiparounduae.sharepoint.com/:b:/s/group/ERmbRFkE7-dIgGRkuCel3TwB-mRlidp904suhH5HxuC1jQ?e=7irI9k"/>
 <AppDomains>
     <AppDomain>https://shiparounduae.sharepoint.com</AppDomain>
     <AppDomain>https://login.microsoftonline.com</AppDomain>
     <AppDomain>https://device.login.microsoftonline.com</AppDomain>
     <AppDomain>https://autologon.microsoftazuread-sso.com</AppDomain>
+    <AppDomain>https://lk-online.github.io</AppDomain>
 </AppDomains>
-
   <Hosts>
     <Host Name="Mailbox"/>
   </Hosts>
@@ -27,7 +27,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/taskpane.html"/>
+        <SourceLocation DefaultValue="https://lk-online.github.io/Lead/dist/taskpane.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -74,13 +74,13 @@
     </Hosts>
     <Resources>
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/assets/icon-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://lk-online.github.io/Lead/dist/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://lk-online.github.io/Lead/dist/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://lk-online.github.io/Lead/dist/assets/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Commands.Url" DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/taskpane.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="https://lk-online.github.io/Lead/dist/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://lk-online.github.io/Lead/dist/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="Sale Leads"/>
