@@ -13,7 +13,7 @@ const EMAIL_TEMPLATES = {
     attachments: "{attachments}",
     note: "If you accept our offer, please note that the last page of our quotation is the proforma invoice.<br>",
     closing:
-      "We appreciate your interest in Ship-Around for your procurement needs and we are looking forward to your order confirmation<br>",
+      "We appreciate your interest in Ship-Around for your procurement needs and we are looking forward to your order confirmation.<br>",
     footnote:
       "If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing future requests.",
   },

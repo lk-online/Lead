@@ -15,6 +15,7 @@
     <AppDomain>https://device.login.microsoftonline.com</AppDomain>
     <AppDomain>https://autologon.microsoftazuread-sso.com</AppDomain>
     <AppDomain>https://lk-online.github.io</AppDomain>
+    <AppDomain>https://github.com</AppDomain>
 </AppDomains>
   <Hosts>
     <Host Name="Mailbox"/>

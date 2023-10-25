@@ -4,7 +4,7 @@
   <Version>1.0.0.0</Version>
   <ProviderName>Ship-Around</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="Lead"/>
+  <DisplayName DefaultValue="Sales Leads"/>
   <Description DefaultValue="Send an email based on a template for repeating email actions."/>
   <IconUrl DefaultValue="https://github.com/lk-online/Lead/tree/main/dist/assets/icon-64.png"/>
   <HighResolutionIconUrl DefaultValue="https://github.com/lk-online/Lead/tree/main/dist/assets/icon-128.png"/>
