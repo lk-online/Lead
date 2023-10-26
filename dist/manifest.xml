@@ -4,11 +4,11 @@
   <Version>1.0.0.0</Version>
   <ProviderName>Ship-Around</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="Sales Leads"/>
-  <Description DefaultValue="Send an email based on a template for repeating email actions."/>
+  <DisplayName DefaultValue="Leads"/>
+  <Description DefaultValue="Send email based on templates for repeating email actions."/>
   <IconUrl DefaultValue="https://github.com/lk-online/Lead/tree/main/dist/assets/icon-64.png"/>
   <HighResolutionIconUrl DefaultValue="https://github.com/lk-online/Lead/tree/main/dist/assets/icon-128.png"/>
-  <SupportUrl DefaultValue="https://shiparounduae.sharepoint.com/:b:/s/group/ERmbRFkE7-dIgGRkuCel3TwB-mRlidp904suhH5HxuC1jQ?e=7irI9k"/>
+  <SupportUrl DefaultValue="https://shiparounduae.sharepoint.com/sites/group/Dev/Office%20Add-ins/Outlook/Leads/Leads%20Outlook%20Add-in.pdf"/>
 <AppDomains>
     <AppDomain>https://shiparounduae.sharepoint.com</AppDomain>
     <AppDomain>https://login.microsoftonline.com</AppDomain>
