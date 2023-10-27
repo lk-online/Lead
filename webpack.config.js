@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const urlDev = "https://localhost:3101/";
-const urlProd = "https://github.com/lk-online/Lead/tree/main/dist/";
+const urlProd = "https://lk-online.github.io/Lead/dist/";
 
 async function getHttpsOptions() {
   const httpsOptions = await devCerts.getHttpsServerOptions();
