@@ -59,6 +59,10 @@ class EmailUtility {
     this.item = item;
   }
 
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   getEmailContent(templateType, replacements) {
     if (!EMAIL_TEMPLATES[templateType]) {
       throw new Error(`No template found for type: ${templateType}`);
@@ -72,7 +76,10 @@ class EmailUtility {
 
       let sectionContent = text;
       for (const [replaceKey, value] of Object.entries(replacements)) {
-        sectionContent = sectionContent.replace(`{${replaceKey}}`, value);
+        // Check if the key is "intro" and the replacement key is "name"
+        if (key === "intro" && replaceKey === "name") {
+          sectionContent = sectionContent.replace(`{${replaceKey}}`, this.capitalizeFirstLetter(value));
+        } else sectionContent = sectionContent.replace(`{${replaceKey}}`, value);
       }
       content += sectionContent + "<br>";
     }
@@ -206,10 +213,6 @@ class EmailUtility {
         }
       });
     });
-  }
-
-  capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }
 
