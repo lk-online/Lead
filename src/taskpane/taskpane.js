@@ -38,7 +38,7 @@ const EMAIL_TEMPLATES = {
   buyer_outreach: {
     cc: "info@ship-around.com",
     intro: "Dear {name},<br>",
-    body: "Ship-Around extends a warm invitation to immerse yourself in our realm of digitalized procurement.<br><br>We recognise that adapting to new practices requires time and consideration. Hence, we present a hybrid approach — simply send us your inquiries, and we'll diligently source the best deals for you.<br><br>For a swifter, more streamlined procurement experience, delve into our <a href='https://ship-around.com/'><online marketplace/a>. Enjoy the benefits of a transparent system with no monthly subscriptions, hidden fees, or additional charges — only pay the displayed product price.<br>",
+    body: "Ship-Around extends a warm invitation to immerse yourself in our realm of digitalized procurement.<br><br>We recognise that adapting to new practices requires time and consideration. Hence, we present a hybrid approach — simply send us your inquiries, and we'll diligently source the best deals for you.<br><br>For a swifter, more streamlined procurement experience, delve into our <a href='https://ship-around.com/'><online marketplace</a>. Enjoy the benefits of a transparent system with no monthly subscriptions, hidden fees, or additional charges — only pay the displayed product price.<br>",
     note: "Our buyers reap the advantages of: <ol><li>Comprehensive product comparison</li><li>Detailed product listings</li><li>Efficient product location filtering</li></ol><br>",
     closing:
       "We'd be delighted to organize a brief call with you to explore how Ship-Around can transform your procurement processes. Are you available for a quick chat this week?<br>",
