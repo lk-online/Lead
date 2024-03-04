@@ -59,6 +59,7 @@ Office.onReady((info) => {
     document.getElementById("acknowledge").onclick = acknowledgeRFQ;
     document.getElementById("prepare-quote-email").onclick = prepareQuoteEmail;
     document.getElementById("follow-up").onclick = followUp;
+    document.getElementById("buyer-outreach").onclick = buyerOutreachInitial;
   }
 });
 
