@@ -35,6 +35,14 @@ const EMAIL_TEMPLATES = {
     footnote:
       "If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing future requests.",
   },
+  buyer_outreach: {
+    cc: "info@ship-around.com",
+    intro: "Dear {name},<br>",
+    body: "Ship-Around extends a warm invitation to immerse yourself in our realm of digitalized procurement.<br><br>We recognise that adapting to new practices requires time and consideration. Hence, we present a hybrid approach — simply send us your inquiries, and we'll diligently source the best deals for you.<br><br>For a swifter, more streamlined procurement experience, delve into our <a href='https://ship-around.com/'><online marketplace/a>. Enjoy the benefits of a transparent system with no monthly subscriptions, hidden fees, or additional charges — only pay the displayed product price.<br>",
+    note: "Our buyers reap the advantages of: <ol><li>Comprehensive product comparison</li><li>Detailed product listings</li><li>Efficient product location filtering</li></ol><br>",
+    closing:
+      "We'd be delighted to organize a brief call with you to explore how Ship-Around can transform your procurement processes. Are you available for a quick chat this week?<br>",
+  },
 };
 
 const DOCUMENT_TYPE_MAPPINGS = {
@@ -426,5 +434,39 @@ export async function followUp() {
   } catch (error) {
     // Use the helper function to display the error in the task pane
     emailUtility.displayErrorInTaskpane(`Error in followUp: ${error.message}`);
+  }
+}
+
+export async function buyerOutreachInitial() {
+  let emailUtility;
+  try {
+    // Get a reference to the current compose item
+    const item = Office.context.mailbox.item;
+
+    emailUtility = new EmailUtility(item);
+    const modal = new Modal("inputModal", ["nameInputDiv"], "modalOk", "modalCancel");
+
+    // Show the modal and wait for the input
+    const [name] = await modal.show();
+
+    // Use the modal input to prepend to the subject
+    await emailUtility.addSubject(`[Ship-Around - the hybrid procurement marketplace]`);
+
+    // Define the email address you want to add to CC
+    const ccAddress = EMAIL_TEMPLATES.buyer_outreach.cc;
+
+    // Simply add CC
+    await emailUtility.addCC(ccAddress);
+
+    // Get the email content
+    const emailContentToAdd = emailUtility.getEmailContent("buyer_outreach", {
+      name: name.trim(),
+    });
+
+    // Use the addBody method to prepend the content
+    await emailUtility.addBody(emailContentToAdd);
+  } catch (error) {
+    // Use the helper function to display the error in the taskpane
+    emailUtility.displayErrorInTaskpane(`Error in acknowledgeRFQ: ${error.message}`);
   }
 }
