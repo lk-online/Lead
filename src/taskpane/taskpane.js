@@ -451,7 +451,7 @@ export async function buyerOutreachInitial() {
     const [name] = await modal.show();
 
     // Use the modal input to prepend to the subject
-    await emailUtility.addSubject(`[Ship-Around - the hybrid procurement marketplace]`);
+    await emailUtility.addSubject(`Ship-Around introduction and meeting request`);
 
     // Define the email address you want to add to CC
     const ccAddress = EMAIL_TEMPLATES.buyer_outreach.cc;
