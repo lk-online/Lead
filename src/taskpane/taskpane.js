@@ -17,6 +17,36 @@ const EMAIL_TEMPLATES = {
     footnote:
       "If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing future requests.",
   },
+  purchase_order: {
+    cc: "group@ship-around.com",
+    intro: "Dear {name},<br>",
+    body: "Please find attached:<br>",
+    attachments: "{attachments}",
+    note: "Looking forward to fulfilling this order.<br>",
+    closing: "Thank you for being a valuable supplier of Ship-Around.<br>",
+    footnote:
+      "If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free seller account.<br><br>It only takes 5 minutes and offers exposure to a worldwide online audience.<br><br>If you need more information setting up your online store, don't hesitate to contact us.",
+  },
+  proforma_invoice: {
+    cc: "group@ship-around.com",
+    intro: "Dear {name},<br>",
+    body: "Thank you for your order confirmation<br><br>Please find attached:<br>",
+    attachments: "{attachments}",
+    note: "Thank you for choosing Ship-Around for your procurement needs.<br>",
+    closing: "Looking forward to fulfilling your order.<br>",
+    footnote:
+      "If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing future requests.",
+  },
+  final_invoice: {
+    cc: "group@ship-around.com",
+    intro: "Dear {name},<br>",
+    body: "Thank you for your order.<br><br>Please find attached:<br>",
+    attachments: "{attachments}",
+    note: "Thank you for choosing Ship-Around for your procurement needs.<br>",
+    closing: "Looking forward to your next order.<br>",
+    footnote:
+      "If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing future requests.",
+  },
   acknowledge: {
     cc: "group@ship-around.com",
     intro: "Dear {name},<br>",
@@ -50,6 +80,7 @@ const DOCUMENT_TYPE_MAPPINGS = {
   DN202: "Delivery Note",
   PL202: "Packing List",
   INV202: "Invoice",
+  PO202: "Purchase Order",
 };
 
 Office.onReady((info) => {
@@ -58,6 +89,9 @@ Office.onReady((info) => {
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("acknowledge").onclick = acknowledgeRFQ;
     document.getElementById("prepare-quote-email").onclick = prepareQuoteEmail;
+    document.getElementById("prepare-po-email").onclick = preparePOEmail;
+    document.getElementById("prepare-proforma-invoice-email").onclick = prepareProformaInvoiceEmail;
+    document.getElementById("prepare-paid-invoice-email").onclick = prepareFinalInvoiceEmail;
     document.getElementById("follow-up").onclick = followUp;
     document.getElementById("buyer-outreach").onclick = buyerOutreachInitial;
   }
@@ -394,6 +428,171 @@ export async function prepareQuoteEmail() {
     await emailUtility.addBody(emailContentToAdd);
   } catch (error) {
     emailUtility.displayErrorInTaskpane(`Error in prepareQuoteEmail: ${error.message}`);
+  }
+}
+
+export async function preparePOEmail() {
+  let emailUtility;
+  try {
+    // Get a reference to the current compose item
+    const item = Office.context.mailbox.item;
+
+    emailUtility = new EmailUtility(item);
+    const modal = new Modal("inputModal", ["nameInputDiv"], "modalOk", "modalCancel");
+
+    // Show the modal and wait for the input
+    const [name] = await modal.show();
+
+    // Get the list of attachment names
+    const attachmentNames = await emailUtility.listAttachments();
+
+    // Extract just the attachment names without the prefix
+    const pOAttachments = attachmentNames
+      .filter((name) => name.startsWith("Purchase Order PO202"))
+      .map((name) => name.replace("Purchase Order ", ""));
+
+    // Determine the subject prefix based on the number of Q202 attachments
+    let subjectPrefix = "";
+    if (pOAttachments.length === 1) {
+      subjectPrefix = `[Purchase Order ${pOAttachments[0]}] `;
+    } else if (pOAttachments.length > 1) {
+      subjectPrefix = `[Purchase Orders ${pOAttachments.join(", ")}] `;
+    }
+
+    // Use the addSubject method to prepend the prefix to the current subject
+    if (subjectPrefix) {
+      await emailUtility.addSubject(subjectPrefix);
+    }
+
+    // Define the email address you want to add to CC
+    const cCAddress = EMAIL_TEMPLATES.purchase_order.cc;
+
+    // Add the group email address to CC if it's not already there
+    await emailUtility.addCC(cCAddress);
+
+    // Generate the attachment table
+    const attachmentTable = emailUtility.generateAttachmentTable(attachmentNames);
+
+    // Get the email content
+    const emailContentToAdd = emailUtility.getEmailContent("purchase_order", {
+      name: name.trim(),
+      attachments: attachmentTable,
+    });
+
+    // Use the addBody method to prepend the content
+    await emailUtility.addBody(emailContentToAdd);
+  } catch (error) {
+    emailUtility.displayErrorInTaskpane(`Error in preparePOEmail: ${error.message}`);
+  }
+}
+
+export async function prepareProformaInvoiceEmail() {
+  let emailUtility;
+  try {
+    // Get a reference to the current compose item
+    const item = Office.context.mailbox.item;
+
+    emailUtility = new EmailUtility(item);
+    const modal = new Modal("inputModal", ["nameInputDiv"], "modalOk", "modalCancel");
+
+    // Show the modal and wait for the input
+    const [name] = await modal.show();
+
+    // Get the list of attachment names
+    const attachmentNames = await emailUtility.listAttachments();
+
+    // Extract just the attachment names without the prefix
+    const invoiceAttachments = attachmentNames
+      .filter((name) => name.startsWith("Invoice INV202"))
+      .map((name) => name.replace("Invoice ", ""));
+
+    // Determine the subject prefix based on the number of Q202 attachments
+    let subjectPrefix = "";
+    if (invoiceAttachments.length === 1) {
+      subjectPrefix = `[Proforma Invoice ${invoiceAttachments[0]}] `;
+    } else if (invoiceAttachments.length > 1) {
+      subjectPrefix = `[Proforma Invoices ${invoiceAttachments.join(", ")}] `;
+    }
+
+    // Use the addSubject method to prepend the prefix to the current subject
+    if (subjectPrefix) {
+      await emailUtility.addSubject(subjectPrefix);
+    }
+
+    // Define the email address you want to add to CC
+    const cCAddress = EMAIL_TEMPLATES.proforma_invoice.cc;
+
+    // Add the group email address to CC if it's not already there
+    await emailUtility.addCC(cCAddress);
+
+    // Generate the attachment table
+    const attachmentTable = emailUtility.generateAttachmentTable(attachmentNames);
+
+    // Get the email content
+    const emailContentToAdd = emailUtility.getEmailContent("proforma_invoice", {
+      name: name.trim(),
+      attachments: attachmentTable,
+    });
+
+    // Use the addBody method to prepend the content
+    await emailUtility.addBody(emailContentToAdd);
+  } catch (error) {
+    emailUtility.displayErrorInTaskpane(`Error in prepareProformaInvoiceEmail: ${error.message}`);
+  }
+}
+
+export async function prepareFinalInvoiceEmail() {
+  let emailUtility;
+  try {
+    // Get a reference to the current compose item
+    const item = Office.context.mailbox.item;
+
+    emailUtility = new EmailUtility(item);
+    const modal = new Modal("inputModal", ["nameInputDiv"], "modalOk", "modalCancel");
+
+    // Show the modal and wait for the input
+    const [name] = await modal.show();
+
+    // Get the list of attachment names
+    const attachmentNames = await emailUtility.listAttachments();
+
+    // Extract just the attachment names without the prefix
+    const invoiceAttachments = attachmentNames
+      .filter((name) => name.startsWith("Invoice INV202"))
+      .map((name) => name.replace("Invoice ", ""));
+
+    // Determine the subject prefix based on the number of Q202 attachments
+    let subjectPrefix = "";
+    if (invoiceAttachments.length === 1) {
+      subjectPrefix = `[Paid Invoice ${invoiceAttachments[0]}] `;
+    } else if (invoiceAttachments.length > 1) {
+      subjectPrefix = `[Paid Invoices ${invoiceAttachments.join(", ")}] `;
+    }
+
+    // Use the addSubject method to prepend the prefix to the current subject
+    if (subjectPrefix) {
+      await emailUtility.addSubject(subjectPrefix);
+    }
+
+    // Define the email address you want to add to CC
+    const cCAddress = EMAIL_TEMPLATES.final_invoice.cc;
+
+    // Add the group email address to CC if it's not already there
+    await emailUtility.addCC(cCAddress);
+
+    // Generate the attachment table
+    const attachmentTable = emailUtility.generateAttachmentTable(attachmentNames);
+
+    // Get the email content
+    const emailContentToAdd = emailUtility.getEmailContent("final_invoice", {
+      name: name.trim(),
+      attachments: attachmentTable,
+    });
+
+    // Use the addBody method to prepend the content
+    await emailUtility.addBody(emailContentToAdd);
+  } catch (error) {
+    emailUtility.displayErrorInTaskpane(`Error in prepareFinalInvoiceEmail: ${error.message}`);
   }
 }
 
