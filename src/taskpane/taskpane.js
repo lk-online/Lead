@@ -24,7 +24,7 @@ const EMAIL_TEMPLATES = {
     attachments: "{attachments}",
     note: "We have already created a pending online order for you, to experience the future of online procurement.<br>",
     closing:
-      "Our hybrid sales approach allows you to either buy online at already discounted item prices or proceed with attached quotation.<br><br>Visit the <a href='https://ship-around.com/my-account/orders/'>orders</a> page in your dashboard and checkout to confirm your order and receive a proforma invoice at the discounted prices.<br><br>You can also click on the order link provided in the attached quote to navigate to the checkout page.",
+      "Our hybrid sales approach allows you to either buy online at already discounted item prices or proceed with attached quotation.<br><br>Visit the <a href='https://ship-around.com/my-account/orders/'>orders</a> page in your dashboard and checkout to confirm your order, and receive a proforma invoice at the discounted prices.<br><br>You can also click on the order link provided in the attached quote to navigate to the checkout page.<br>",
     footnote:
       "We appreciate your interest in Ship-Around for your procurement needs and we are looking forward to your online or offline order confirmation.",
   },
