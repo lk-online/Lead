@@ -17,6 +17,17 @@ const EMAIL_TEMPLATES = {
     footnote:
       "If you haven't already, please <a href='https://ship-around.com/register'>register</a> a free buyer account.<br><br>It only takes 5 minutes and will expedite processing future requests.",
   },
+  offer_order_existing_user: {
+    cc: "group@ship-around.com",
+    intro: "Dear {name},<br>",
+    body: "Please find attached:<br>",
+    attachments: "{attachments}",
+    note: "We have already created a pending online order for you, to experience the future of online procurement.<br>",
+    closing:
+      "Our hybrid sales approach allows you to either buy online at already discounted item prices or proceed with attached quotation.<br><br>Visit the <a href='https://ship-around.com/my-account/orders/'>orders</a> page in your dashboard and checkout to confirm your order and receive a proforma invoice at the discounted prices.<br><br>You can also click on the order link provided in the attached quote to navigate to the checkout page.",
+    footnote:
+      "We appreciate your interest in Ship-Around for your procurement needs and we are looking forward to your online or offline order confirmation.",
+  },
   purchase_order: {
     cc: "group@ship-around.com",
     intro: "Dear {name},<br>",
@@ -89,6 +100,8 @@ Office.onReady((info) => {
     document.getElementById("app-body").style.display = "flex";
     document.getElementById("acknowledge").onclick = acknowledgeRFQ;
     document.getElementById("prepare-quote-email").onclick = prepareQuoteEmail;
+    document.getElementById("prepare-quote-with-order-email-existing-user").onclick =
+      prepareQuoteWithOrderEmailUserExists;
     document.getElementById("prepare-po-email").onclick = preparePOEmail;
     document.getElementById("prepare-proforma-invoice-email").onclick = prepareProformaInvoiceEmail;
     document.getElementById("prepare-paid-invoice-email").onclick = prepareFinalInvoiceEmail;
@@ -420,6 +433,61 @@ export async function prepareQuoteEmail() {
 
     // Get the email content
     const emailContentToAdd = emailUtility.getEmailContent("offer", {
+      name: name.trim(),
+      attachments: attachmentTable,
+    });
+
+    // Use the addBody method to prepend the content
+    await emailUtility.addBody(emailContentToAdd);
+  } catch (error) {
+    emailUtility.displayErrorInTaskpane(`Error in prepareQuoteEmail: ${error.message}`);
+  }
+}
+
+export async function prepareQuoteWithOrderEmailUserExists() {
+  let emailUtility;
+  try {
+    // Get a reference to the current compose item
+    const item = Office.context.mailbox.item;
+
+    emailUtility = new EmailUtility(item);
+    const modal = new Modal("inputModal", ["nameInputDiv"], "modalOk", "modalCancel");
+
+    // Show the modal and wait for the input
+    const [name] = await modal.show();
+
+    // Get the list of attachment names
+    const attachmentNames = await emailUtility.listAttachments();
+
+    // Extract just the attachment names without the prefix
+    const quotationAttachments = attachmentNames
+      .filter((name) => name.startsWith("Quotation Q202"))
+      .map((name) => name.replace("Quotation ", ""));
+
+    // Determine the subject prefix based on the number of Q202 attachments
+    let subjectPrefix = "";
+    if (quotationAttachments.length === 1) {
+      subjectPrefix = `[Quotation ${quotationAttachments[0]}] `;
+    } else if (quotationAttachments.length > 1) {
+      subjectPrefix = `[Quotations ${quotationAttachments.join(", ")}] `;
+    }
+
+    // Use the addSubject method to prepend the prefix to the current subject
+    if (subjectPrefix) {
+      await emailUtility.addSubject(subjectPrefix);
+    }
+
+    // Define the email address you want to add to CC
+    const ccGroupAddress = EMAIL_TEMPLATES.offer_order_existing_user.cc;
+
+    // Add the group email address to CC if it's not already there
+    await emailUtility.addCC(ccGroupAddress);
+
+    // Generate the attachment table
+    const attachmentTable = emailUtility.generateAttachmentTable(attachmentNames);
+
+    // Get the email content
+    const emailContentToAdd = emailUtility.getEmailContent("offer_order_existing_user", {
       name: name.trim(),
       attachments: attachmentTable,
     });
