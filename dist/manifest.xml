@@ -31,16 +31,6 @@
         <SourceLocation DefaultValue="https://lk-online.github.io/Lead/dist/taskpane.html"/>
       </DesktopSettings>
     </Form>
-    <Form xsi:type="ItemCompose">
-      <DesktopSettings>
-        <SourceLocation DefaultValue="https://lk-online.github.io/Lead/dist/taskpane.html"/>
-      </DesktopSettings>
-    </Form>
-    <Form xsi:type="ItemRead">
-      <DesktopSettings>
-        <SourceLocation DefaultValue="https://lk-online.github.io/Lead/dist/taskpane.html"/>
-      </DesktopSettings>
-    </Form>
   </FormSettings>
   <Permissions>ReadWriteItem</Permissions>
   <Rule xsi:type="RuleCollection" Mode="Or">
@@ -57,7 +47,6 @@
     <Hosts>
       <Host xsi:type="MailHost">
         <DesktopFormFactor>
-          <SupportsSharedFolders>true</SupportsSharedFolders>
           <FunctionFile resid="Commands.Url"/>
           <ExtensionPoint xsi:type="MessageComposeCommandSurface">
             <OfficeTab id="TabDefault">

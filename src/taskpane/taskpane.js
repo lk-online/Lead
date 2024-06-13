@@ -360,13 +360,13 @@ class Modal {
 }
 
 export function getMessageId() {
-  const item = Office.context.mailbox.item;
-  const emailUtility = new EmailUtility(item);
+  //const item = Office.context.mailbox.item;
+  //const emailUtility = new EmailUtility(item);
 
-  const messageId = emailUtility.getMessageId();
+  //const messageId = emailUtility.getMessageId();
 
   // Output the messageId somewhere in the task pane
-  document.getElementById("messageIdOutput").textContent = "Message ID: " + messageId;
+  document.getElementById("messageIdOutput").textContent = "Message ID"; //messageId
 
   // Optionally, use this ID to query more details via Microsoft Graph API
   //getMessageDetails(messageId);
