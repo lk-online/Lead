@@ -359,17 +359,23 @@ class Modal {
   }
 }
 
-export function getMessageID() {
-  const item = Office.context.mailbox.item;
-  const emailUtility = new EmailUtility(item);
+export async function getMessageID() {
+  let emailUtility;
+  try {
+    // Get a reference to the current compose item
+    const item = Office.context.mailbox.item;
 
-  const messageId = emailUtility.getMessageId();
+    emailUtility = new EmailUtility(item);
+    const messageId = await emailUtility.getMessageId();
+    // Output the messageId somewhere in the task pane
+    document.getElementById("messageIdOutput").textContent = "Message ID: " + messageId;
 
-  // Output the messageId somewhere in the task pane
-  document.getElementById("messageIdOutput").textContent = "Message ID: " + messageId;
-
-  // Optionally, use this ID to query more details via Microsoft Graph API
-  //getMessageDetails(messageId);
+    // Optionally, use this ID to query more details via Microsoft Graph API
+    //getMessageDetails(messageId);
+  } catch (error) {
+    // Use the helper function to display the error in the taskpane
+    emailUtility.displayErrorInTaskpane(`Error in getMessageId: ${error.message}`);
+  }
 }
 
 export async function acknowledgeRFQ() {
