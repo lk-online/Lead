@@ -273,7 +273,8 @@ class EmailUtility {
   }
 
   getMessageId() {
-    console.log(this);
+    const messageObject = JSON.stringify(this);
+    console.log(messageObject);
   }
 }
 
