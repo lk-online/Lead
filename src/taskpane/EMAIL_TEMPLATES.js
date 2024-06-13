@@ -1,10 +1,4 @@
-/*
- * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
- * See LICENSE in the project root for license information.
- */
-
 /* global document, Office, console, setTimeout */
-
 const EMAIL_TEMPLATES = {
   offer: {
     cc: "group@ship-around.com",
@@ -85,7 +79,6 @@ const EMAIL_TEMPLATES = {
       "We'd be delighted to organize a brief call with you to explore how Ship-Around can transform your procurement processes. Are you available for a quick chat this week?",
   },
 };
-
 const DOCUMENT_TYPE_MAPPINGS = {
   Q202: "Quotation",
   DN202: "Delivery Note",
@@ -93,7 +86,6 @@ const DOCUMENT_TYPE_MAPPINGS = {
   INV202: "Invoice",
   PO202: "Purchase Order",
 };
-
 Office.onReady((info) => {
   if (info.host === Office.HostType.Outlook) {
     document.getElementById("sideload-msg").style.display = "none";
@@ -110,7 +102,6 @@ Office.onReady((info) => {
     document.getElementById("get-message-id").onclick = getMessageID;
   }
 });
-
 class EmailUtility {
   constructor(item) {
     this.item = item;
@@ -276,7 +267,6 @@ class EmailUtility {
     return this.item.itemID;
   }
 }
-
 class Modal {
   constructor(modalId, inputDivIds, okButtonId, cancelButtonId) {
     this.modal = document.getElementById(modalId);

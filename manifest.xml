@@ -31,9 +31,20 @@
         <SourceLocation DefaultValue="https://localhost:3101/taskpane.html"/>
       </DesktopSettings>
     </Form>
+    <Form xsi:type="ItemCompose">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://localhost:3101/taskpane.html"/>
+      </DesktopSettings>
+    </Form>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://localhost:3101/taskpane.html"/>
+      </DesktopSettings>
+    </Form>
   </FormSettings>
   <Permissions>ReadWriteItem</Permissions>
   <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
   </Rule>
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
