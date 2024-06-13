@@ -107,7 +107,7 @@ Office.onReady((info) => {
     document.getElementById("prepare-paid-invoice-email").onclick = prepareFinalInvoiceEmail;
     document.getElementById("follow-up").onclick = followUp;
     document.getElementById("buyer-outreach").onclick = buyerOutreachInitial;
-    document.getElementById("get-message-id").onclick = getMessageId;
+    document.getElementById("get-message-id").onclick = getMessageID;
   }
 });
 
@@ -273,7 +273,7 @@ class EmailUtility {
   }
 
   getMessageId() {
-    return this.item.itemID;
+    return this.item.itemId;
   }
 }
 
@@ -359,7 +359,7 @@ class Modal {
   }
 }
 
-export function getMessageId() {
+export function getMessageID() {
   const item = Office.context.mailbox.item;
   const emailUtility = new EmailUtility(item);
 
