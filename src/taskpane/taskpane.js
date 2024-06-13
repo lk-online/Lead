@@ -273,7 +273,7 @@ class EmailUtility {
   }
 
   getMessageId() {
-    return this.item;
+    console.log(this);
   }
 }
 
