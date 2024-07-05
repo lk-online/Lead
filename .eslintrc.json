@@ -1,7 +1,4 @@
 {
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
   "plugins": ["office-addins"],
   "extends": ["plugin:office-addins/recommended"]
 }
