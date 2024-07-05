@@ -327,6 +327,7 @@ class EmailUtility {
 
   getMessageId() {
     const messageObject = JSON.stringify(this.item);
+    console.log("first");
     console.log(messageObject);
   }
 }
