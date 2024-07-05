@@ -22,9 +22,20 @@ const EMAIL_TEMPLATES = {
     intro: "Dear {name},<br>",
     body: "Please find attached:<br>",
     attachments: "{attachments}",
-    note: "We have already created a pending online order for you, to experience the future of online procurement.<br>",
+    note: "We have created a pending online order for you, to experience the future of online procurement.<br>",
     closing:
       "Our hybrid sales approach allows you to either buy online at already discounted item prices or proceed with attached quotation.<br><br>Visit the <a href='https://ship-around.com/my-account/orders/'>orders</a> page in your dashboard and checkout to confirm your order, and receive a proforma invoice at the discounted prices.<br><br>You can also click on the order link provided in the attached quote to navigate to the checkout page.<br>",
+    footnote:
+      "We appreciate your interest in Ship-Around for your procurement needs and we are looking forward to your online or offline order confirmation.",
+  },
+  offer_order_new_user: {
+    cc: "group@ship-around.com",
+    intro: "Dear {name},<br>",
+    body: "Please find attached:<br>",
+    attachments: "{attachments}",
+    note: "We have created a pending online order for you, to experience the future of online procurement.<br>",
+    closing:
+      "Our hybrid sales approach allows you to either buy online at already discounted item prices or proceed with attached quotation.<br><br>Visit the <a href='https://ship-around.com/my-account/orders/'>orders</a> page in your dashboard and checkout to confirm your order, and receive a proforma invoice at the discounted prices.<br><br>You can also click on the order link provided in the attached quote to navigate to the checkout page.<br><br>Our system automatically creates a buyer account for new customers, so make sure to reset your password the first time you log-in.<br>",
     footnote:
       "We appreciate your interest in Ship-Around for your procurement needs and we are looking forward to your online or offline order confirmation.",
   },
@@ -97,17 +108,59 @@ const DOCUMENT_TYPE_MAPPINGS = {
 Office.onReady((info) => {
   if (info.host === Office.HostType.Outlook) {
     document.getElementById("sideload-msg").style.display = "none";
-    document.getElementById("app-body").style.display = "flex";
-    document.getElementById("acknowledge").onclick = acknowledgeRFQ;
-    document.getElementById("prepare-quote-email").onclick = prepareQuoteEmail;
-    document.getElementById("prepare-quote-with-order-email-existing-user").onclick =
-      prepareQuoteWithOrderEmailUserExists;
-    document.getElementById("prepare-po-email").onclick = preparePOEmail;
-    document.getElementById("prepare-proforma-invoice-email").onclick = prepareProformaInvoiceEmail;
-    document.getElementById("prepare-paid-invoice-email").onclick = prepareFinalInvoiceEmail;
-    document.getElementById("follow-up").onclick = followUp;
-    document.getElementById("buyer-outreach").onclick = buyerOutreachInitial;
-    document.getElementById("get-message-id").onclick = getMessageID;
+
+    const parentContainer = document.getElementById("app-body");
+    parentContainer.style.display = "flex";
+
+    // Attach click event using event delegation
+    parentContainer.addEventListener("click", (event) => {
+      const target = event.target;
+
+      switch (target.id) {
+        case "acknowledge":
+          acknowledgeRFQ();
+          break;
+
+        case "prepare-quote-email":
+          prepareQuoteEmail();
+          break;
+
+        case "prepare-quote-with-order-email-existing-user":
+          prepareQuoteWithOrderEmailUserExists(true);
+          break;
+
+        case "prepare-quote-with-order-email-new-user":
+          prepareQuoteWithOrderEmailUserExists(false);
+          break;
+
+        case "prepare-po-email":
+          preparePOEmail();
+          break;
+
+        case "prepare-proforma-invoice-email":
+          prepareProformaInvoiceEmail();
+          break;
+
+        case "prepare-paid-invoice-email":
+          prepareFinalInvoiceEmail();
+          break;
+
+        case "follow-up":
+          followUp();
+          break;
+
+        case "buyer-outreach":
+          buyerOutreachInitial();
+          break;
+
+        case "get-message-id":
+          getMessageID();
+          break;
+
+        default:
+          break;
+      }
+    });
   }
 });
 
@@ -273,7 +326,7 @@ class EmailUtility {
   }
 
   getMessageId() {
-    const messageObject = JSON.stringify(this);
+    const messageObject = JSON.stringify(this.item);
     console.log(messageObject);
   }
 }
@@ -469,7 +522,7 @@ export async function prepareQuoteEmail() {
   }
 }
 
-export async function prepareQuoteWithOrderEmailUserExists() {
+export async function prepareQuoteWithOrderEmailUserExists(bool) {
   let emailUtility;
   try {
     // Get a reference to the current compose item
@@ -511,14 +564,16 @@ export async function prepareQuoteWithOrderEmailUserExists() {
     // Generate the attachment table
     const attachmentTable = emailUtility.generateAttachmentTable(attachmentNames);
 
-    // Get the email content
-    const emailContentToAdd = emailUtility.getEmailContent("offer_order_existing_user", {
-      name: name.trim(),
-      attachments: attachmentTable,
-    });
+    // Determine the email template based on bool
+    const templateName = bool ? "offer_order_existing_user" : "offer_order_new_user";
 
-    // Use the addBody method to prepend the content
-    await emailUtility.addBody(emailContentToAdd);
+    // Generate the email content and prepend it
+    await emailUtility.addBody(
+      emailUtility.getEmailContent(templateName, {
+        name: name.trim(),
+        attachments: attachmentTable,
+      })
+    );
   } catch (error) {
     emailUtility.displayErrorInTaskpane(`Error in prepareQuoteEmail: ${error.message}`);
   }
