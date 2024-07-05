@@ -1,6 +1,7 @@
 {
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "__dirname"
   },
   "plugins": ["office-addins"],
   "extends": ["plugin:office-addins/recommended"]
