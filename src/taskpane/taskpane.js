@@ -326,8 +326,7 @@ class EmailUtility {
   }
 
   getMessageId() {
-    const messageObject = JSON.stringify(this.item);
-    console.log("second");
+    const messageObject = JSON.stringify(this);
     console.log(messageObject);
   }
 }
