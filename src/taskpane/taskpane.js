@@ -1,8 +1,3 @@
-/*
- * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
- * See LICENSE in the project root for license information.
- */
-
 /* global document, Office, console, setTimeout */
 
 const EMAIL_TEMPLATES = {
@@ -113,7 +108,8 @@ Office.onReady((info) => {
     parentContainer.style.display = "flex";
 
     // Attach click event using event delegation
-    parentContainer.addEventListener("click", (event) => {
+    const buttonContainer = document.getElementById("buttonContainer");
+    buttonContainer.addEventListener("click", (event) => {
       const target = event.target;
 
       switch (target.id) {
@@ -326,8 +322,8 @@ class EmailUtility {
   }
 
   getMessageId() {
-    const messageObject = JSON.stringify(this);
-    console.log(messageObject);
+    const conversationId = this.item.conversationId;
+    return conversationId;
   }
 }
 
