@@ -416,9 +416,22 @@ export async function getMessageID() {
     const item = Office.context.mailbox.item;
 
     emailUtility = new EmailUtility(item);
-    const messageId = await emailUtility.getMessageId();
+    const conversationId = await emailUtility.getMessageId();
+    const idElement = document.getElementById("messageIdOutput");
     // Output the messageId somewhere in the task pane
-    document.getElementById("messageIdOutput").textContent = "Message ID: " + messageId;
+    idElement.textContent = conversationId;
+
+    idElement.addEventListener("click", function () {
+      navigator.clipboard
+        .writeText(conversationId)
+        .then(function () {
+          // Provide feedback to the user
+          alert("Conversation ID copied to clipboard!");
+        })
+        .catch(function (err) {
+          console.error("Failed to copy to clipboard: ", err);
+        });
+    });
 
     // Optionally, use this ID to query more details via Microsoft Graph API
     //getMessageDetails(messageId);
